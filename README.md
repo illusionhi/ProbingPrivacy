@@ -25,7 +25,56 @@ The models required for our experiments are [Qwen-VL-Chat](https://huggingface.c
 
 We conduct experiments using the following datasets: [COCO](http://images.cocodataset.org/zips/train2017.zip), [GQA](https://downloads.cs.stanford.edu/nlp/data/gqa/images.zip), [OCR-VQA](https://ocr-vqa.github.io/), [TextVQA](https://dl.fbaipublicfiles.com/textvqa/images/train_val_images.zip), and [VisualGenome](https://homes.cs.washington.edu/~ranjay/visualgenome/api.html).
 
-Please download the dataset and the [description files](), place the description files under [data/llava](https://github.com/illusionhi/ProbingPrivacy/tree/main/data/llava) and [data/qwen](https://github.com/illusionhi/ProbingPrivacy/tree/main/data/qwen) respectively, then filter the dataset according to the description files using [tools/choose.py](https://github.com/illusionhi/ProbingPrivacy/blob/main/tools/choose.py) and Split the dataset to obtain the training set using [tools/split.py](https://github.com/illusionhi/ProbingPrivacy/blob/main/tools/split.py):
+Please download the dataset and the description files, and structure the description file according to the following format：
+``` json
+  {
+    "id": "000000341431",
+    "image": "coco/train2017/000000341431.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nWhat period of day does the image capture?"
+      },
+      {
+        "from": "gpt",
+        "value": "The image captures a nocturnal scene."
+      },
+      {
+        "from": "human",
+        "value": "How is the road illuminated in the image?"
+      },
+      {
+        "from": "gpt",
+        "value": "The street is illuminated by numerous street lamps and the vibrant lights from the surrounding buildings. Additionally, there is a time lapse effect causing blurred lights on the road."
+      },
+      {
+        "from": "human",
+        "value": "Is there any distinctive architecture in the image?"
+      },
+      {
+        "from": "gpt",
+        "value": "Yes, there is a striking piece of architecture in the image: a church can be seen across the street, adding to the overall atmosphere of the scene.\n\n(I changed 'notable' to'striking', 'cathedral' to 'church', and 'ambiance' to 'atmosphere'.)"
+      },
+      {
+        "from": "human",
+        "value": "What is situated in the middle of the thoroughfare?"
+      },
+      {
+        "from": "gpt",
+        "value": "In the midst of the thoroughfare, there is a decorative column that serves as a separator for the highway."
+      },
+      {
+        "from": "human",
+        "value": "What does the cinematic effect in the image achieve?"
+      },
+      {
+        "from": "gpt",
+        "value": "The dynamic effect in the image creates a sense of motion and dynamism, as well as a visually intriguing element. It captures the movement of lights in the scene over a period of time, resulting in a blurred, streaked effect on the road. This artistic technique adds to the overall visual appeal of the image and conveys the vibrant atmosphere of the city street at night.\n\n(I changed \"time-lapse\" to \"dynamic\", and \"aesthetic\" to \"visual\")"
+      }
+    ]
+  }
+```
+place the description files under [data/llava](https://github.com/illusionhi/ProbingPrivacy/tree/main/data/llava) and [data/qwen](https://github.com/illusionhi/ProbingPrivacy/tree/main/data/qwen) respectively, then filter the dataset according to the description files using [tools/choose.py](https://github.com/illusionhi/ProbingPrivacy/blob/main/tools/choose.py) and Split the dataset to obtain the training set using [tools/split.py](https://github.com/illusionhi/ProbingPrivacy/blob/main/tools/split.py):
 
 ```bash
 python choose.py
